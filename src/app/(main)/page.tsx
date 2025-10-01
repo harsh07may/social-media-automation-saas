@@ -1,7 +1,7 @@
-import FeaturesSection from "@/_sections/FeaturesSection";
-import HeroSection from "@/_sections/HeroSection";
-import PricingSection from "@/_sections/PricingSection";
-import TemplatesSection from "@/_sections/TemplatesSection";
+import FeaturesSection from "@/app/_sections/FeaturesSection";
+import HeroSection from "@/app/_sections/HeroSection";
+import PricingSection from "@/app/_sections/PricingSection";
+import TemplatesSection from "@/app/_sections/TemplatesSection";
 import Footer from "@/components/shared/Footer";
 
 export default function Home() {

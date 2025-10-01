@@ -1,6 +1,6 @@
 import { SparklesIcon } from "lucide-react";
+import Link from "next/link";
 import React from "react";
-import { Button } from "../ui/button";
 
 function Header() {
   return (
@@ -12,9 +12,12 @@ function Header() {
             ContentAI
           </span>
         </div>
-        <Button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all">
+        <Link
+          href="/create"
+          className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all"
+        >
           Start Creating
-        </Button>
+        </Link>
       </div>
     </nav>
   );
