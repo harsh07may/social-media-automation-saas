@@ -15,6 +15,7 @@ import {
   Home,
   Inbox,
   InboxIcon,
+  LayoutDashboard,
   PlusIcon,
   Search,
   Settings,
@@ -27,18 +28,18 @@ import { NavUser } from "./NavUser";
 const items = [
   {
     title: "Browse Templates",
-    url: "#",
+    url: "/templates",
     icon: InboxIcon,
   },
   {
     title: "Create Post",
-    url: "#",
+    url: "/create",
     icon: PlusIcon,
   },
   {
-    title: "My Posts",
-    url: "#",
-    icon: FileTextIcon,
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: LayoutDashboard,
   },
 ];
 

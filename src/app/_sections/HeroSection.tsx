@@ -18,7 +18,7 @@ function HeroSection() {
         media game with AI-powered content creation.
       </p>
       <Link
-        href="/dashboard/create"
+        href="/create"
         className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-10 py-4 rounded-full text-lg font-semibold hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center gap-2"
       >
         Start Creating <SparklesIcon className="w-5 h-5" />
