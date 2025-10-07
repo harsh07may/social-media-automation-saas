@@ -1,11 +1,11 @@
 import React from "react";
 
-function DashboardPage() {
+function TemplatesPage() {
   return (
     <main className="min-h-screen w-full bg-gradient-to-br from-purple-100 via-pink-100 to-blue-100">
-      Dashboard
+      Templates
     </main>
   );
 }
 
-export default DashboardPage;
+export default TemplatesPage;

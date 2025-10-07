@@ -9,16 +9,9 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import {
-  Calendar,
-  CommandIcon,
-  FileTextIcon,
-  Home,
-  Inbox,
   InboxIcon,
   LayoutDashboard,
   PlusIcon,
-  Search,
-  Settings,
   SparklesIcon,
 } from "lucide-react";
 import Link from "next/link";
