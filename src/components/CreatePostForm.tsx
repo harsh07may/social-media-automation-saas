@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,10 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -19,16 +17,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import {
-  Sparkles,
-  ImageIcon,
-  Hash,
-  Download,
   Copy,
-  Save,
+  Download,
+  Hash,
+  ImageIcon,
   Loader2,
   RefreshCw,
+  Save,
+  Sparkles,
 } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const templates = [
   { id: "1", name: "Modern Business Card", category: "Business" },
@@ -56,11 +57,9 @@ function CreatePostForm({ templateId }: { templateId: string | undefined }) {
 
   const generateCaption = async () => {
     if (!prompt.trim()) {
-      //   toast({
-      //     title: "Error",
-      //     description: "Please enter a prompt for your post",
-      //     variant: "destructive",
-      //   });
+      toast.error("Error", {
+        description: "Please enter a prompt for your post",
+      });
       return;
     }
 
@@ -83,11 +82,10 @@ function CreatePostForm({ templateId }: { templateId: string | undefined }) {
 
   const generateImage = async () => {
     if (!prompt.trim()) {
-      //   toast({
-      //     title: "Error",
-      //     description: "Please enter a prompt for your image",
-      //     variant: "destructive",
-      //   });
+      toast.error("Error", {
+        description: "Please enter a prompt for your image",
+      });
+
       return;
     }
 
@@ -105,31 +103,27 @@ function CreatePostForm({ templateId }: { templateId: string | undefined }) {
 
   const savePost = async () => {
     if (!generatedCaption && !generatedImage) {
-      // toast({
-      //   title: "Error",
-      //   description: "Please generate content before saving",
-      //   variant: "destructive",
-      // });
+      toast.error("Error", {
+        description: "Please generate content before saving",
+      });
       return;
     }
 
     setIsSaving(true);
     // Simulate saving
     setTimeout(() => {
-      // toast({
-      //   title: "Success",
-      //   description: "Post saved successfully!",
-      // });
+      toast.success("Success", {
+        description: "Post saved successfully!",
+      });
       setIsSaving(false);
     }, 1000);
   };
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-    // toast({
-    //   title: "Copied",
-    //   description: "Content copied to clipboard",
-    // });
+    toast.success("Copied", {
+      description: "Content copied to clipboard",
+    });
   };
 
   const downloadImage = () => {
@@ -142,6 +136,9 @@ function CreatePostForm({ templateId }: { templateId: string | undefined }) {
       //   title: "Downloaded",
       //   description: "Image downloaded successfully",
       // });
+      toast.success("Downloaded", {
+        description: "Image downloaded successfully",
+      });
     }
   };
 
