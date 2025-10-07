@@ -13,7 +13,7 @@ function Header() {
           </span>
         </div>
         <Link
-          href="/create"
+          href="/dashboard/create"
           className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all"
         >
           Start Creating
