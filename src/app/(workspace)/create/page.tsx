@@ -1,4 +1,4 @@
-import CreatePostForm from "@/components/CreatePostForm";
+import CreatePostForm, { templatesData } from "@/components/CreatePostForm";
 
 interface CreatePageProps {
   searchParams: Promise<{ templateId?: string }>;
@@ -7,7 +7,13 @@ interface CreatePageProps {
 export default async function CreatePostPage({
   searchParams,
 }: CreatePageProps) {
-  const templateId = (await searchParams).templateId;
+  const params = await searchParams;
+
+  // Fetch template if specified
+  let template = null;
+  if (params.templateId) {
+    const template = templatesData.find((t) => t.id === params.templateId);
+  }
 
   return (
     <main className="min-h-screen w-full p-6 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
@@ -22,7 +28,7 @@ export default async function CreatePostPage({
           </p>
         </div>
 
-        <CreatePostForm templateId={templateId} />
+        <CreatePostForm template={template} />
       </div>
     </main>
   );

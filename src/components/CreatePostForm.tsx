@@ -31,7 +31,8 @@ import {
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const templates = [
+// We would typically fetch these from a backend or database
+export const templatesData: Template[] = [
   { id: "1", name: "Modern Business Card", category: "Business" },
   { id: "2", name: "Lifestyle Quote", category: "Lifestyle" },
   { id: "3", name: "Food Photography", category: "Food" },
@@ -39,23 +40,24 @@ const templates = [
   { id: "5", name: "Travel Adventure", category: "Travel" },
 ];
 
-function CreatePostForm({ templateId }: { templateId: string | undefined }) {
+interface CreatePostFormProps {
+  template: Template | null;
+}
+
+function CreatePostForm({ template }: CreatePostFormProps) {
   const [prompt, setPrompt] = useState("");
   const [generatedCaption, setGeneratedCaption] = useState("");
   const [generatedImage, setGeneratedImage] = useState("");
   const [generatedHashtags, setGeneratedHashtags] = useState("");
   const [isGeneratingCaption, setIsGeneratingCaption] = useState(false);
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
-  const [selectedTemplate, setSelectedTemplate] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState(
+    template?.category || ""
+  );
   const [isSaving, setIsSaving] = useState(false);
 
-  useEffect(() => {
-    if (templateId) {
-      setSelectedTemplate(templateId);
-    }
-  }, [templateId]);
-
-  const generateCaption = async () => {
+  /** @deprecated This function is obsolete. Use generateCaption instead.  */
+  const generateStaticCaption = async () => {
     if (!prompt.trim()) {
       toast.error("Error", {
         description: "Please enter a prompt for your post",
@@ -78,6 +80,42 @@ function CreatePostForm({ templateId }: { templateId: string | undefined }) {
       setGeneratedHashtags(hashtags);
       setIsGeneratingCaption(false);
     }, 2000);
+  };
+
+  const generateCaption = async () => {
+    setIsGeneratingCaption(true);
+    try {
+      console.log({ prompt, selectedTemplate });
+      const response = await fetch("/api/generate-caption", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          topic: prompt,
+          template: selectedTemplate,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to generate caption");
+      }
+
+      const data = await response.json();
+      setGeneratedCaption(data.caption);
+      setGeneratedHashtags(data.hashtags);
+
+      toast.success("Caption Generated!", {
+        description: "Your AI-powered caption and hashtags are ready.",
+      });
+    } catch (error) {
+      console.error("Error generating caption:", error);
+      toast.error("Generation Failed", {
+        description: "Failed to generate caption. Please try again.",
+      });
+    } finally {
+      setIsGeneratingCaption(false);
+    }
   };
 
   const generateImage = async () => {
@@ -132,10 +170,7 @@ function CreatePostForm({ templateId }: { templateId: string | undefined }) {
       link.href = generatedImage;
       link.download = "instagram-post.jpg";
       link.click();
-      // toast({
-      //   title: "Downloaded",
-      //   description: "Image downloaded successfully",
-      // });
+
       toast.success("Downloaded", {
         description: "Image downloaded successfully",
       });
@@ -166,7 +201,7 @@ function CreatePostForm({ templateId }: { templateId: string | undefined }) {
                 <SelectValue placeholder="Select a template" />
               </SelectTrigger>
               <SelectContent>
-                {templates.map((template) => (
+                {templatesData.map((template) => (
                   <SelectItem key={template.id} value={template.id}>
                     {template.name}
                     <Badge variant="secondary" className="ml-2 text-xs">
